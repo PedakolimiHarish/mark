@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mark_base">
+    
+	<xacro:macro name="mark_base" params="prefix">
+		<link name="${prefix}_link">
+
+			<inertial>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<mass value="9"/>
+				<inertia ixx="0.000037" ixy="0.000001" ixz="0" iyy="0.000075" iyz="0" izz="0"/>
+			</inertial>
+
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0.01"/>
+				<geometry>
+					<mesh filename="package://mark_description/mesh/base/base.stl"/> 
+				</geometry>
+			</collision>
+
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0.01"/>
+				<geometry>
+					<mesh filename="package://mark_description/mesh/base/base.stl"/>
+				</geometry>
+			</visual>
+
+			<collision name="caster_base_collision">
+				<origin rpy=" 0 0 0" xyz="0.223 0 -0.09816"/>
+				<geometry>
+					<sphere radius="0.019"/>
+				</geometry>
+				<surface>
+				<friction>
+					<ode>
+						<mu>0</mu>
+						<mu2>0</mu2>
+						<slip1>1.0</slip1>
+						<slip2>1.0</slip2>
+					</ode>
+				</friction>
+				</surface>
+			</collision>
+
+			<collision name="caster_wheel_collision">
+				<origin rpy=" 0 0 0" xyz="0.223 0 -0.075448"/>
+				<geometry>
+					<cylinder length="0.04" radius="0.02"/>
+				</geometry>
+				<surface>
+				<friction>
+					<ode>
+						<mu>0</mu>
+						<mu2>0</mu2>
+						<slip1>1.0</slip1>
+						<slip2>1.0</slip2>
+					</ode>
+				</friction>
+				</surface>
+			</collision>
+
+			<visual name="caster_base_visual">
+				<origin rpy=" 0 0 0" xyz="0.223 0 -0.075448"/>
+				<geometry>
+					<cylinder length="0.04" radius="0.02"/>
+				</geometry>
+			</visual>
+
+			<visual name="caster_wheel_visual">
+				<origin rpy=" 0 0 0" xyz="0.223 0 -0.09816"/>
+				<geometry>
+					<sphere radius="0.019"/>
+				</geometry>
+			</visual> 
+
+		</link>
+
+
+	 	<link name="piller_link">
+
+			<inertial>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<mass value="0.05"/>
+				<inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+			</inertial>
+
+
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://mark_description/mesh/base/pillers.dae"/> 
+				</geometry>
+			</collision> 
+
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<mesh filename="package://mark_description/mesh/base/pillers.dae"/>
+				</geometry>
+			</visual>
+
+		</link>
+
+			<joint name="piller_joint" type="fixed">
+				<axis xyz="0 1 0"/>
+				<parent link="${prefix}_link"/>
+				<child link="piller_link"/>
+				<origin rpy="0 0 0" xyz="-0.099185 0 -0.05621"/>
+			</joint> 
+
+ 		 <gazebo reference="piller_link">
+			<material>Gazebo/Red</material>
+		</gazebo>
+
+		<gazebo reference="base_link">
+			<material>Gazebo/DarkGrey</material>
+		</gazebo>
+
+	</xacro:macro>
+</robot>
